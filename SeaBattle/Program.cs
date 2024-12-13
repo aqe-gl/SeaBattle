@@ -12,6 +12,8 @@ namespace SeaBattle
         {
             Battlefield area = new Battlefield();
             area.Print();
+            area.PlaceShips();
+            area.Print();
 
             Console.ReadLine();
         }
