@@ -31,7 +31,7 @@ namespace SeaBattle
                     } 
                     if (area[i, j] == true)
                     {
-                         visibleArea[i, j] = '#';
+                        // visibleArea[i, j] = '#';
                     }
                     areaString += $"{visibleArea[i, j]} ";
                 }
@@ -117,30 +117,26 @@ namespace SeaBattle
 
         private bool CheckPlacement(int column, int row, Ship ship)
         {
-            for (int i = column - 1; i < column + ship.SizeX; i++)
+            for (int i = column - 1; i <= column + ship.SizeX; i++)
             {
-                for (int j = row - 1; j < row + ship.SizeY; j++)
+                for (int j = row - 1; j <= row + ship.SizeY; j++)
                 {
                     if (i >= 0 && i < 10 && j >= 0 && j < 10)
                     {
                         if (area[i, j] == true)
                         {
                             return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        }                        
                     }
-                    return false;
                     
                 }
             }
-            return false;
+            return true;
         }
 
         public bool ShootAt(string location) // E.g. "a8"
         {
+
             var row = letters.IndexOf(location[0].ToString().ToUpper());
             var column = int.Parse(location[1].ToString());
 
@@ -192,6 +188,40 @@ namespace SeaBattle
                         visibleArea[i, j] = 'X';
                     }
                 }
+
+            }
+            for (int i = column; i < column + ship.SizeX; i++)
+            {
+                for (int j = row; j < row + ship.SizeY; j++)
+                {
+                    visibleArea[i, j] = 'O';
+                }
+            }
+        }
+
+        public bool CheckVictory()
+        {
+            if (ships.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+
+            }
+        }
+        public bool IsValidInput(string input)
+        {
+            try
+            {
+                var row = letters.IndexOf(input[0].ToString().ToUpper());
+                var column = int.Parse(input[1].ToString());
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }
